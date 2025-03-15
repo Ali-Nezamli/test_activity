@@ -1,0 +1,19 @@
+name: Slack Notification on Push
+
+on:
+  push:
+    branches:
+      - '**'  # all branches
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: GitHub Actions
+          SLACK_MESSAGE: |
+            🚀 *${{ github.actor }}* pushed to branch `${{ github.ref_name }}`.
+            - Commit: "${{ github.event.head_commit.message }}"
